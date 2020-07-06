@@ -1,0 +1,32 @@
+<html lang ="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale=1.0">  
+        <title> ehehe | <%= valtozo %> </title>
+        <link rel="stylesheet" href="/css" type="text/css">
+    </head>
+    <body>
+        <nav>
+            <div>
+                <a href="/"><h1>Homár vagy.</h1></a>
+                <p> Nekem igazam van, és neked pedig nem.</p>
+            </div>
+            <ul>
+                <li><a href="/">Lajstrom</a></li>
+                <li><a href="/about">Krónika</a></li>
+                <li><a href="/blogs/create">Kunstrukció</a></li>
+            </ul>
+        </nav>
+        <div class="create-blog content">
+            <form>
+                <label for="title">title:</label>
+                <input type="text" id="title" required>
+                <label for="snippet">Blog snippet</label>
+                <input type="text" id="snippet" required>
+                <label for="body">Blog body</label>
+                <textarea id="body" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </body>
+</html>
