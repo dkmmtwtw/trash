@@ -5,9 +5,13 @@ const {middleware} = require('./middleware')
 app.use(middleware);
 
 app.set('view engine', 'ejs');
-
+object = [
+    {title: "Did you know?", snippet: "More is more."},
+    {title: "Rule #1", snippet: "you gotta have fun"},
+    {title: "LCS", snippet: "Jestem polsky co kurwa mid or feed"},
+]
 app.get("/",(req, res) => {
-    res.render('index',{valtozo: 'Homar!'})
+    res.render('index',{valtozo: 'Homar!',object})
 })
 app.get("/about",(req, res) => {
     res.render('about',{valtozo: 'About'})

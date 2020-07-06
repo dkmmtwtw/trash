@@ -3,3 +3,4 @@ minta/
 public/
 !public/css.css
 *.bat
+*.json

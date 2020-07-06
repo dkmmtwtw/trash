@@ -20,7 +20,12 @@
         </nav>
 
         <div class="blogs content">
-            <h2>Mhm..</h2>
+            <% if(object.length != 0){ %>
+                <% object.forEach(blog => { %>
+                    <h3><%=blog.title%></h3>
+                    <p><%=blog.snippet%></p>
+                <% }); %>
+            <% } %> 
         </div>
 
     </body>
