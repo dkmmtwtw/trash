@@ -31,7 +31,7 @@ app.get("/css",(req,res) => {
     res.sendFile("./public/css.css",{root: __dirname})
 })
 
-app.use((r,res) => {res.status(404).render('404')});
+app.use((r,res) => {res.status(404).render('404',{valtozo:'Nem.'})});
 
 
 app.listen(3000,()=>{

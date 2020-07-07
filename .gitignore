@@ -4,3 +4,5 @@ public/
 !public/css.css
 *.bat
 *.json
+route*
+text*
