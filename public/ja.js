@@ -3,7 +3,9 @@ XMLHttpRequest.prototype.setRequestHeaders = function (obj) {
 		this.setRequestHeader(key, obj[key]);
 	});
 }
-function startsWithVowel(szoveg){
+function startsWithVowel(szoveg,magyar){
+    if magyar
+    	return 'aeiouáéíóöőúüű'.includes(szoveg[0]);
     return 'aeiou'.includes(szoveg[0]);
 }
 function felsorolas(array){
