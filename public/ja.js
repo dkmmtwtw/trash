@@ -48,3 +48,15 @@ function Timer(fn, t) {
         return this.stop().start();
     }
 }
+
+    const promiseWithTimeout = async function (promise, time) {
+        return new Promise((resolve, reject) => {
+            const timerId = setTimeout(()=>reject(new Error('Timeout')), time);
+            promise
+                .then(resolve)
+                .catch(reject)
+                .finally(() =>
+                    clearTimeout(timerId)
+                )
+        })
+    }
