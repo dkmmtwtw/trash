@@ -40,3 +40,21 @@ serialize = function(obj, prefix) {
                 )
         })
     }
+
+   dateToHumanComprehensible(arg){
+        const date = new Date(arg);
+        // const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const month = monthNames[date.getMonth()];
+        const day = date.getDate();
+        let hours = date.getHours();
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+
+        const suffix = (day % 10 === 1 && day !== 11) ? 'st' :
+                    (day % 10 === 2 && day !== 12) ? 'nd' :
+                    (day % 10 === 3 && day !== 13) ? 'rd' : 'th';
+
+        hours = hours.toString().padStart(2, '0');
+
+        return `${day}${suffix} of ${month} [${hours}:${minutes}] `;
+    }
