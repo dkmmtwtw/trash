@@ -1,45 +1,56 @@
 
-export function slideshowFrames(parent, frames, tick = 200) {
+export function slideshowFrames(parent, frames, loop = false, tick = 1000 / 16) {
     try {
 
         let currentFrame = 0;
         const totalFrames = frames.length;
-        console.log("slideshowFrames ran, frames length: ", totalFrames)
 
+        let timeoutId;
         let images = [];
         frames.forEach((frame, index) => {
-            const img = document.createElement('img');
-            img.src = frame;
+            const img = appendImg(parent, frame)
             img.style.display = 'none';
-            img.style.position = "absolute";
-            img.style.top = 0;
-            img.style.left = 0;
-            img.style.width = "100%";
-            img.style.height = "100%";
-            parent.appendChild(img);
             images.push(img);
-            console.log("current img element rendered: ", img);
         });
 
 
-        (function showNextSlide() {
+        const showNextSlide = function () {
 
-            console.log("showNextSlide called, current frame: ", currentFrame);
             if (currentFrame > 0) {
                 images[currentFrame - 1].style.display = 'none';
             }
             images[currentFrame].style.display = 'block';
 
             currentFrame++;
-
+            let nextStep;
             if (currentFrame < totalFrames) {
-                setTimeout(showNextSlide, tick);
+                nextStep = showNextSlide;
+            } else if (loop) {
+                nextStep = restart;
             } else {
-                setTimeout(() => {
-                        images.forEach(img => img.remove())
-                }, tick)
+                nextStep = over;
             }
-        })();
+            timeoutId = setTimeout(nextStep, tick);
+        };
+        showNextSlide();
+
+        function restart() {
+            try {
+                images[totalFrames - 1].style.display = 'none';
+                currentFrame = 0;
+                showNextSlide();
+            } catch (error) {
+                console.error("restart threw:", error.message)
+            }
+        }
+
+        function over() {
+            console.log("animation over called")
+            clearTimeout(timeoutId);
+            images.forEach(img => img.remove())
+        }
+
+        return over;
 
     } catch (error) {
         console.error("slideshowFrames threw:", error.message)
@@ -51,13 +62,11 @@ export async function extractFramesFromGrid(src, columns, rows = 1) {
         const img = new Image();
         img.crossOrigin = "anonymus"
         img.src = src;
-        console.log("img src = ", img.src)
         return new Promise(resolve => {
             img.addEventListener('load', async () => {
                 try {
 
                     const canvas = document.createElement("canvas");
-                    console.log("canvas element: ", canvas)
                     const ctx = canvas.getContext('2d');
 
 
@@ -68,7 +77,6 @@ export async function extractFramesFromGrid(src, columns, rows = 1) {
                     for (let row = 0; row < rows; row++) {
                         for (let col = 0; col < columns; col++) {
 
-                            console.log(`Trying to extract the ${row * columns + col}. from image: ${img}`)
 
                             const x = col * frameWidth;
                             const y = row * frameHeight;
@@ -91,20 +99,20 @@ export async function extractFramesFromGrid(src, columns, rows = 1) {
     } catch (error) {
         console.error('extractFrames err:', error.message);
     }
+}
 
-    function showFrames(frames) {
-        try {
-            const container = this.template.querySelector('.animation-container');
-            console.log(`trying to show Frames ${JSON.stringify(frames)} inside this container: ${container}`,)
-            frames.forEach((frameDataUrl, index) => {
-                const imgElement = document.createElement('img');
-                imgElement.src = frameDataUrl;
-                console.log('img with source (frameDataUrl) to be appended next to the container: ', frameDataUrl)
-                imgElement.style.display = 'block';
-                container.appendChild(imgElement);
-            });
-        } catch (error) {
-            console.error(':/ ', error.message);
-        }
+export function appendImg(parent, src) {
+    try {
+        const img = document.createElement('img');
+        img.src = src;
+        img.style.position = "absolute";
+        img.style.top = 0;
+        img.style.left = 0;
+        img.style.width = "100%";
+        img.style.height = "100%";
+        parent.appendChild(img);
+        return img;
+    } catch (error) {
+        console.error('appendImg threw:', error.message);
     }
 }
