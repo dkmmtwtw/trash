@@ -1,12 +1,5 @@
 
-startsWithVowel = function(szoveg,magyar){
-    if magyar
-    	return 'aeiouáéíóöőúüű'.includes(szoveg[0]);
-    return 'aeiou'.includes(szoveg[0]);
-}
-felsorolas = function(array){
-    return array.join(", ").replace(/,(?=[^,]*$)/," és");
-}
+
 
 suffix = number => (number % 10 === 1 && number !== 11) ? 'st' :
 	    (number % 10 === 2 && number !== 12) ? 'nd' :
@@ -40,6 +33,15 @@ serialize = function(obj, prefix) {
                 )
         })
     }
+
+startsWithVowel = function(szoveg,magyar){
+    if magyar
+    	return 'aeiouáéíóöőúüű'.includes(szoveg[0]);
+    return 'aeiou'.includes(szoveg[0]);
+}
+felsorolas = function(array){
+    return array.join(", ").replace(/,(?=[^,]*$)/," és");
+}
 
    dateToHumanComprehensible(arg){
         const date = new Date(arg);
